@@ -25,7 +25,7 @@ And finally, get an build this plugin:
     $ git clone https://github.com/snoopdave/roller-jspwiki-plugin.git
     $ cd roller-jspwiki-plugin
     $ mvn clean install
-
+    
 Once that is complete you will find the JSPWiki plugin jar in the target directory.
 
 How to install and use with Roller
