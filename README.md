@@ -26,9 +26,37 @@ And finally, get an build this plugin:
     $ cd roller-jspwiki-plugin
     $ mvn clean install
 
+Once that is complete you will find the JSPWiki plugin jar in the target directory.
+
 How to install and use with Roller
 ---
-Coming soon...
 
-    
+1. Copy the JSPWiki plugin jar file into the WEB-INF/lib directory of your Roller installation.
+
+2. Include the JSPWiki plugin in the list of plugins in your roller-custom.properties file:
+
+    plugins.page=\
+    org.apache.roller.plugins.weblogentry.jspwiki.WikiPlugin,\
+    org.apache.roller.weblogger.business.plugins.entry.TopicTagPlugin,\
+    org.apache.roller.weblogger.business.plugins.entry.SmileysPlugin,\
+    org.apache.roller.weblogger.business.plugins.entry.ConvertLineBreaksPlugin
+
+3. Add a JSPWiki properties file at WEB-INF/classes/jspwiki-custom.properties
+
+    # set this to point to your JSPWiki instance if you have one
+    jspwiki.baseURL=http://rollerweblogger.org/wiki/
+
+    # these are needed to run JSPWiki embedded inside Roller, no need to change them!
+    jspwiki.pageProvider =org.apache.roller.plugins.weblogentry.jspwiki.RollerPageProvider
+    jspwiki.basicAttachmentProvider.storageDir = .
+    jspwiki.fileSystemProvider.pageDir = .
+    jspwiki.referenceStyle=absolute
+    jspwiki.authorizer=org.apache.wiki.auth.authorize.WebContainerAuthorizer
+    jspwiki.translatorReader.allowHTML = true
+    jspwiki.translatorReader.camelCaseLinks = true
+    jspwiki.translatorReader.inlinePattern.1 = *.jpg
+    jspwiki.translatorReader.inlinePattern.2 = *.png
+    jspwiki.translatorReader.inlinePattern.3 = *.gif
+
+Restart Roller and you should see the JSPWiki as one of the options in the New Entry page of Roller.
     
