@@ -102,7 +102,7 @@ public class WikiPlugin implements WeblogEntryPlugin {
     public String render(String src) {
         String ret = null;
         try {
-            ret = wikiContext.getEngine().textToHTML(wikiContext, src);
+            ret = wikiContext.getEngine().getRenderingManager().textToHTML(wikiContext, src);
         } catch (Exception e) {
             log.error("ERROR rendering Wiki text", e);
         }
