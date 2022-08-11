@@ -12,7 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jspwiki.version>2.11.2</jspwiki.version>
+        <jspwiki.version>2.11.3</jspwiki.version>
     </properties>
 
     <build>
