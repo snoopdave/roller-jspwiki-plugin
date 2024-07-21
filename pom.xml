@@ -93,6 +93,14 @@
             <version>2.6</version>
         </dependency>
 
+        <!-- Roller will throw ClassNotFoundException when runnning in Docker/JDK17 if this is not included -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-highlighter</artifactId>
+            <scope>compile</scope>
+            <version>9.9.1</version> <!-- match the version in Roller -->
+        </dependency>
+
     </dependencies>
 
 </project>
