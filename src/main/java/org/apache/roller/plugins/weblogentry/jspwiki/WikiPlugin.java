@@ -32,6 +32,7 @@ import org.apache.roller.weblogger.ui.core.RollerContext;
 import org.apache.wiki.WikiContext;
 import org.apache.wiki.WikiEngine;
 import org.apache.wiki.WikiPage;
+import org.apache.wiki.api.core.Engine;
 
 /**
  * Wiki plugin using the JSPWiki WikiEngine. If you want Wiki links to point to your JSPWiki, then
@@ -49,12 +50,10 @@ public class WikiPlugin implements WeblogEntryPlugin {
     public String description = "Allows use of JSPWiki formatting to easily generate HTML. "
             + "See the <a href='http://www.jspwiki.org/Wiki.jsp?page=TextFormattingRules' target='jspwiki'>JSPWiki</a> site.";
 
-    private static Log log
-            = LogFactory.getFactory().getInstance(WikiPlugin.class);
+    private static final Log log = LogFactory.getFactory().getInstance(WikiPlugin.class);
 
-    static WikiEngine wikiEngine = null;
+    static Engine wikiEngine = null;
     static WikiContext wikiContext = null;
-    static WikiPage wikiPage = null;
 
     public WikiPlugin() {
         log.debug("JSPWiki WikiPlugin instantiated.");
@@ -70,22 +69,22 @@ public class WikiPlugin implements WeblogEntryPlugin {
      */
     public void init(Weblog weblog) {
         try {
-            if (WikiPlugin.wikiEngine == null) {
-                Object context = RollerContext.getServletContext();
+            if (wikiEngine == null) {
+                ServletContext context = RollerContext.getServletContext();
                 if (context != null) {
-                    // get wiki engine when running inside webapp
-                    ServletContext servletContext = (ServletContext) context;
-                    WikiPlugin.wikiEngine = WikiEngine.getInstance(servletContext, null);
-                } else {
-                    // get wiki engine when running from command-line
+                    // gets wiki engine when running inside webapp
+                    wikiEngine = WikiEngine.getInstance(context, null);
+                }
+                if (wikiEngine == null) {
+                    // gets wiki engine when running from command-line
                     Properties wikiprops = new Properties();
                     wikiprops.load(getClass().getResourceAsStream("/jspwiki.properties"));
-                    WikiPlugin.wikiEngine = new WikiEngine(wikiprops);
+                    wikiEngine = new WikiEngine(wikiprops);
                 }
             }
-            if (WikiPlugin.wikiContext == null && WikiPlugin.wikiEngine != null) {
-                WikiPlugin.wikiPage = new WikiPage(wikiEngine, "dummyPage");
-                WikiPlugin.wikiContext = new WikiContext(WikiPlugin.wikiEngine, WikiPlugin.wikiPage);
+            if (wikiContext == null) {
+                WikiPage wikiPage = new WikiPage(wikiEngine, "dummyPage");
+                wikiContext = new WikiContext(wikiEngine, wikiPage);
             }
         } catch (Exception e) {
             log.error("ERROR initializing WikiPlugin", e);
