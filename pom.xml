@@ -4,7 +4,7 @@
 
     <groupId>org.apache.roller</groupId>
     <artifactId>roller-jspwiki-plugin</artifactId>
-    <version>6.1.4</version> <!-- match the Roller version -->
+    <version>6.1.5</version> <!-- match the Roller version -->
     <packaging>jar</packaging>
 
     <name>roller-jspwiki-plugin</name>
